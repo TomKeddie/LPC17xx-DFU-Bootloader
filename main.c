@@ -43,11 +43,6 @@
 
 #include "lpc17xx_wdt.h"
 
-#define PLAY_BTN    P2_12
-#define ISP_BTN	    P2_10
-
-#define DFU_BTN     PLAY_BTN
-
 #ifndef DEBUG_MESSAGES
 #define printf(...) do {} while (0)
 #endif
@@ -60,11 +55,21 @@ const char *firmware_old  = "firmware.cur";
 
 void setleds(int leds)
 {
+#ifdef LED1
 	GPIO_write(LED1, leds &  1);
+#endif
+#ifdef LED2
 	GPIO_write(LED2, leds &  2);
+#endif
+#ifdef LED3
 	GPIO_write(LED3, leds &  4);
+#endif
+#ifdef LED5
 	GPIO_write(LED4, leds &  8);
+#endif
+#ifdef LED5
 	GPIO_write(LED5, leds & 16);
+#endif
 }
 
 int dfu_btn_pressed(void)
@@ -186,19 +191,34 @@ int main(void)
 	WDT_Feed();
 
 	GPIO_init(DFU_BTN); GPIO_input(DFU_BTN);
-
+#ifdef LED1
 	GPIO_init(LED1); GPIO_output(LED1);
+#endif
+#ifdef LED2
 	GPIO_init(LED2); GPIO_output(LED2);
+#endif
+#ifdef LED3
 	GPIO_init(LED3); GPIO_output(LED3);
+#endif
+#ifdef LED4
 	GPIO_init(LED4); GPIO_output(LED4);
+#endif
+#ifdef LED5
 	GPIO_init(LED5); GPIO_output(LED5);
-
+#endif
 	// turn off heater outputs
-	GPIO_init(P2_4); GPIO_output(P2_4); GPIO_write(P2_4, 0);
-	GPIO_init(P2_5); GPIO_output(P2_5); GPIO_write(P2_5, 0);
-	GPIO_init(P2_6); GPIO_output(P2_6); GPIO_write(P2_6, 0);
-	GPIO_init(P2_7); GPIO_output(P2_7); GPIO_write(P2_7, 0);
-
+#ifdef PWM0    
+	GPIO_init(PWM0); GPIO_output(PWM0); GPIO_write(PWM0, 0);
+#endif
+#ifdef PWM1
+	GPIO_init(PWM1); GPIO_output(PWM1); GPIO_write(PWM1, 0);
+#endif
+#ifdef PWM2
+	GPIO_init(PWM2); GPIO_output(PWM2); GPIO_write(PWM2, 0);
+#endif
+#ifdef PWM3
+	GPIO_init(PWM3); GPIO_output(PWM3); GPIO_write(PWM3, 0);
+#endif
 	setleds(31);
 
 	UART_init(UART_RX, UART_TX, APPBAUD);

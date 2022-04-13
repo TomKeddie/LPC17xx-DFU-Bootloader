@@ -40,15 +40,18 @@ typedef enum {
 	p28 = P0_10,
 	p29 = P0_5,
 	p30 = P0_4,
-
 	UART_TX = P0_2,
 	UART_RX = P0_3,
-
+#if 0
 	LED1 = P1_18,
 	LED2 = P1_19,
 	LED3 = P1_20,
 	LED4 = P1_21,
 	LED5 = P4_28,
+#endif
+    PLAY_BTN = P0_20,
+    ISP_BTN = P2_10,
+    DFU_BTN = PLAY_BTN,
 
 	// Not connected
 	NC = -1
